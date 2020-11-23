@@ -7,9 +7,17 @@
     android:layout_margin="16dp">
 
     <Button
-        android:id="@+id/solution_solve"
+        android:id="@+id/puzzle_execute"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="SOLUTION TEXT"/>
+        android:text="Execute"/>
+
+    <TextView
+        android:id="@+id/puzzle_solution"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text=""
+        tools:text="Test Text"
+        android:textAlignment="center" />
 
 </LinearLayout>

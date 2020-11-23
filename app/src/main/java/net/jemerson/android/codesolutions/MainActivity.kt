@@ -2,8 +2,9 @@ package net.jemerson.android.codesolutions
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), PuzzleListFragment.Callbacks {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -19,5 +20,9 @@ class MainActivity : AppCompatActivity() {
                 .addToBackStack(null)
                 .commit()
         }
+    }
+
+    override fun onPuzzleSelected(puzzleId: UUID) {
+
     }
 }

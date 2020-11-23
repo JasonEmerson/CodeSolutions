@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CodeSolutions</string>
+    <string name="puzzle_title">Title</string>
+    <string name="toast_test">TESTING</string>
 </resources>
