@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import java.util.*
 
-class MainActivity : AppCompatActivity(), PuzzleListFragment.Callbacks {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -13,16 +13,12 @@ class MainActivity : AppCompatActivity(), PuzzleListFragment.Callbacks {
                 supportFragmentManager.findFragmentById(R.id.fragment_container)
 
         if (currentFragment == null) {
-            val fragment = SolutionFragment.newInstance()
+            val fragment = PuzzleListFragment.newInstance()
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit()
         }
-    }
-
-    override fun onPuzzleSelected(puzzleId: UUID) {
-
     }
 }

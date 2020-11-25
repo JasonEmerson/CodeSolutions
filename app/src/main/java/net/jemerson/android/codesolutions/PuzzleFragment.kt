@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 
 private const val TAG = "SolutionFragment"
 
-class SolutionFragment : Fragment()  {
+class PuzzleFragment : Fragment()  {
 
     private lateinit var puzzle: Puzzle
     private lateinit var executeButton: Button
@@ -28,7 +27,7 @@ class SolutionFragment : Fragment()  {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_solution, container, false)
+        val view = inflater.inflate(R.layout.fragment_puzzle, container, false)
         executeButton = view.findViewById(R.id.puzzle_execute) as Button
         solutionText = view.findViewById(R.id.puzzle_solution) as TextView
 
@@ -44,8 +43,8 @@ class SolutionFragment : Fragment()  {
     }
 
     companion object {
-        fun newInstance() : SolutionFragment {
-            return SolutionFragment()
+        fun newInstance() : PuzzleFragment {
+            return PuzzleFragment()
         }
     }
 }
