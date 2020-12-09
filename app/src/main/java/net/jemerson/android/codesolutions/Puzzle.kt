@@ -4,12 +4,6 @@ import java.util.*
 
 private const val TAG = "Puzzle"
 
-class Puzzle(val id: UUID = UUID.randomUUID(),
-             var title: String = "",
-             var solution: String = "") {
-
-     fun helloWorld(): String {
-         solution = "Hello World"
-         return solution
-     }
-}
+open class Puzzle(val id: UUID = UUID.randomUUID(),
+                      open var title: String = "",
+                      open var solution: String = "SUPER CLASS SOLUTION")

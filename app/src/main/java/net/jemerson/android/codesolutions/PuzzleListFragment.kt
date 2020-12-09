@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,15 @@ private const val TAG = "SolutionListFragment"
 
 class PuzzleListFragment : Fragment() {
 
+    /**
+     * * Hosting activity implements this interface
+     */
+    interface Callbacks {
+        fun onPuzzleSelected(puzzleId: UUID)
+    }
+
+    private var callbacks: Callbacks? = null
+
     private lateinit var puzzleListViewModel: PuzzleListViewModel
     private lateinit var puzzleRecyclerView: RecyclerView
     private var adapter: PuzzleAdapter? = null
@@ -24,6 +34,12 @@ class PuzzleListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "TOTAL PUZZLES: ${puzzleListViewModel.puzzles.size}")
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        puzzleListViewModel = ViewModelProvider(this).get(PuzzleListViewModel::class.java)
+        callbacks = context as Callbacks?
     }
 
     override fun onCreateView(
@@ -42,6 +58,11 @@ class PuzzleListFragment : Fragment() {
         return view
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        callbacks = null
+    }
+
     private fun updateUI() {
         val puzzles = puzzleListViewModel.puzzles
         adapter = PuzzleAdapter(puzzles)
@@ -49,8 +70,24 @@ class PuzzleListFragment : Fragment() {
     }
 
     private inner class PuzzleHolder(view: View)
-        : RecyclerView.ViewHolder(view) {
-            val titleTextView: TextView = itemView.findViewById(R.id.puzzle_title)
+        : RecyclerView.ViewHolder(view), View.OnClickListener {
+
+            private lateinit var puzzle: Puzzle
+
+            private val titleTextView: TextView = itemView.findViewById(R.id.puzzle_title)
+
+            init {
+                itemView.setOnClickListener(this)
+            }
+
+            fun bind(puzzle: Puzzle) {
+                this.puzzle = puzzle
+                titleTextView.text = this.puzzle.title
+            }
+
+            override fun onClick(v: View) {
+                callbacks?.onPuzzleSelected(puzzle.id)
+            }
         }
 
     private inner class PuzzleAdapter(var puzzles: List<Puzzle>)
@@ -66,15 +103,8 @@ class PuzzleListFragment : Fragment() {
 
         override fun onBindViewHolder(holder: PuzzleHolder, position: Int) {
             val puzzle = puzzles[position]
-            holder.apply {
-                titleTextView.text = puzzle.title
-            }
+            holder.bind(puzzle)
         }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        puzzleListViewModel = ViewModelProvider(this).get(PuzzleListViewModel::class.java)
     }
 
     companion object {
